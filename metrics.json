@@ -1,0 +1,135 @@
+{
+  "data_start": "2023-01-01 00:00:00",
+  "data_end": "2026-11-10 23:00:00",
+  "observations": 33795,
+  "rejected_rows": 45,
+  "training_origins": 4703,
+  "validation_origins": 104,
+  "test_origins": 152,
+  "test_first": "2026-10-01 00:00:00",
+  "test_last": "2026-11-07 18:00:00",
+  "selected_model": "ridge_100",
+  "validation_mae": {
+    "ridge_10": 2.30185615188915,
+    "ridge_100": 2.27963055951477,
+    "ridge_1000": 2.3064744821179173,
+    "extra_trees": 2.50030243290904
+  },
+  "test": {
+    "new_model": {
+      "hours_1_12": {
+        "mae_c": 1.7227776500981764,
+        "rmse_c": 2.3281978874476708
+      },
+      "hours_1_24": {
+        "mae_c": 2.2052111732154036,
+        "rmse_c": 2.879228319377578
+      },
+      "hours_25_48": {
+        "mae_c": 3.431649454773968,
+        "rmse_c": 4.059794083543969
+      },
+      "hours_49_72": {
+        "mae_c": 3.6025461787949515,
+        "rmse_c": 4.356427188505427
+      }
+    },
+    "persistence": {
+      "hours_1_12": {
+        "mae_c": 3.13640350877193,
+        "rmse_c": 4.283349546013415
+      },
+      "hours_1_24": {
+        "mae_c": 3.6929550438596497,
+        "rmse_c": 4.799268093413426
+      },
+      "hours_25_48": {
+        "mae_c": 5.29939692982456,
+        "rmse_c": 6.509266758097272
+      },
+      "hours_49_72": {
+        "mae_c": 5.289254385964911,
+        "rmse_c": 6.549858542733924
+      }
+    },
+    "repeat_yesterday": {
+      "hours_1_12": {
+        "mae_c": 3.791995614035088,
+        "rmse_c": 4.67936399187123
+      },
+      "hours_1_24": {
+        "mae_c": 3.775685307017544,
+        "rmse_c": 4.665758350669493
+      },
+      "hours_25_48": {
+        "mae_c": 4.763980263157895,
+        "rmse_c": 5.882298098622054
+      },
+      "hours_49_72": {
+        "mae_c": 4.147368421052632,
+        "rmse_c": 5.194759505096408
+      }
+    }
+  },
+  "legacy_window": {
+    "origins": 16,
+    "new_model": {
+      "hours_1_12": {
+        "mae_c": 2.003536404912099,
+        "rmse_c": 2.659686124498247
+      },
+      "hours_1_24": {
+        "mae_c": 2.476080986416935,
+        "rmse_c": 3.064984091354431
+      },
+      "hours_25_48": {
+        "mae_c": 3.465061623047445,
+        "rmse_c": 3.9582398089247706
+      },
+      "hours_49_72": {
+        "mae_c": 2.131336173600876,
+        "rmse_c": 2.611775117427553
+      }
+    },
+    "old_model": {
+      "hours_1_12": {
+        "mae_c": 1.4845742864177316,
+        "rmse_c": 1.9900623688229193
+      },
+      "hours_1_24": {
+        "mae_c": 2.032919328232413,
+        "rmse_c": 2.7887419922026506
+      },
+      "hours_25_48": {
+        "mae_c": 4.084988518506548,
+        "rmse_c": 5.159290130665279
+      },
+      "hours_49_72": {
+        "mae_c": 5.847850386318456,
+        "rmse_c": 6.61654686807971
+      }
+    }
+  },
+  "daily_extrema": {
+    "1": {
+      "count": 152,
+      "min_temperature_mae_c": 3.2500300578600174,
+      "max_temperature_mae_c": 3.027704611887883
+    },
+    "2": {
+      "count": 152,
+      "min_temperature_mae_c": 3.9110599730774576,
+      "max_temperature_mae_c": 3.5458715682292583
+    },
+    "3": {
+      "count": 152,
+      "min_temperature_mae_c": 3.9000660251756627,
+      "max_temperature_mae_c": 3.599532772441273
+    }
+  },
+  "verification": {
+    "all_exported_predictions_match_training_library": true,
+    "every_issuance_hour_has_three_complete_calendar_days": true,
+    "missing_history_and_stale_inputs_rejected": true
+  }
+}
