@@ -78,3 +78,15 @@ python upgrade/verify_runtime.py
 The training script chooses ridge penalties from four expanding-window validation blocks ending before October 2026, exports the model, and compares its portable outputs with the fitted arrays on every original test origin. The earlier-season script refits both recipes for its historical check. The runtime checks cover every issuance hour, calendar dates, public daily ranges, stale or incomplete history, the vector API and streamed CSV replay.
 
 Results for this release are in upgrade/evaluation.json, upgrade/season_check.json and upgrade/benchmark.json. The root metrics.json, model.json.gz, train.py, verify.py and README-baseline.md describe the original model. Its runtime is baseline_forecast.py. Root forecast.py accepts an explicit legacy JSON gzip model path for callers replaying that format.
+
+## From Sensor Readings to the Website
+
+1. **Train the model on a development computer.** We used historical hourly weather observations from Environment and Climate Change Canada’s Montréal airport station. The model learns how recent changes in temperature, relative humidity, and station pressure, together with the time of day and season, relate to what happens over the following hours and days. The fitted coefficients are saved in `pi/weights.bin.gz`.
+
+2. **Read the station’s own sensor history.** Once the weather station is running, the forecast uses its outdoor sensor readings from the existing database. Each forecast uses eight hourly readings covering the latest hour and 1, 3, 6, 12, 24, 48, and 72 hours before it. If a required reading is missing or the latest reading is stale, the website should show that the forecast is unavailable. During startup, it can show “Collecting data” while the station builds up enough history.
+
+3. **Calculate the forecast on the Raspberry Pi.** The Pi applies the saved coefficients locally using Python’s standard library. It returns hourly estimates for the next 12 hours and a summary for each of the next three full calendar days. The sky descriptions come from humidity and pressure rules. Forecasting runs offline, with training done separately on the development computer.
+
+4. **Serve the forecast through Flask.** Copy the `pi/` folder to the Raspberry Pi and run `python3 forecast.py example_input.csv` from that folder to check the sample output. Then connect the existing Flask app to the forecasting module and sensor database. Load the model once per Flask worker, refresh the forecast when a new hourly reading is available, and serve the cached `next_12_hours` and `next_3_days` data to the website.
+
+The package includes the trained model and a working command-line example. The remaining integration work is to connect the Flask route and test it with the actual outdoor sensor. Caching keeps page loads from triggering a new forecast. Battery impact still needs to be measured on the assembled station.
