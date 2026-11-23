@@ -90,3 +90,17 @@ Results for this release are in upgrade/evaluation.json, upgrade/season_check.js
 4. **Serve the forecast through Flask.** Copy the `pi/` folder to the Raspberry Pi and run `python3 forecast.py example_input.csv` from that folder to check the sample output. Then connect the existing Flask app to the forecasting module and sensor database. Load the model once per Flask worker, refresh the forecast when a new hourly reading is available, and serve the cached `next_12_hours` and `next_3_days` data to the website.
 
 The package includes the trained model and a working command-line example. The remaining integration work is to connect the Flask route and test it with the actual outdoor sensor. Caching keeps page loads from triggering a new forecast. Battery impact still needs to be measured on the assembled station.
+
+## Deploying v3.0 on the Raspberry Pi
+
+Copy `weather_model_v3.zip` to the Pi and extract it in the Flask project, next to the app’s entry file. The ZIP already contains a folder named `weather_model_v3/`. Keep that folder intact so its `forecast.py` can sit alongside the older version without overwriting it.
+
+To use v3.0 in Flask, import the forecasting functions from the new folder:
+
+```python
+from weather_model_v3.forecast import load_model, forecast
+```
+
+Load the model once when the app starts. Use the station’s existing hourly temperature, humidity, and pressure readings to generate a forecast, then cache the result until the next hourly reading arrives. The Pi runs the trained model offline.
+
+Version 3.0 improves temperature estimates for the next 12 hours and predicts each day’s low directly. In our Montréal airport backtest, the average absolute temperature error over the first 12 hours dropped from 1.72°C to 1.52°C. The standalone forecast script used about 10–11 MB of RAM on our Linux test computer. RAM use and battery impact on the assembled Pi still need to be measured.
