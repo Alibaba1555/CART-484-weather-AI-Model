@@ -1,0 +1,7 @@
+{
+  "machine": "x86_64",
+  "python": "3.12.14",
+  "median_ms": 1.1555529999895953,
+  "process_peak_rss_kib": 11392,
+  "model_bytes": 70443
+}
